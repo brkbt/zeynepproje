@@ -1,0 +1,55 @@
+#define ENA 10
+#define IN1 9
+#define IN2 8
+#define IN3 7
+#define IN4 6
+#define ENB 5
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+}
+
+void motorSaatYonunde(int hiz) {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, hiz);
+  
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, hiz);
+}
+
+void motorSaatTersiYonunde(int hiz) {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  analogWrite(ENA, hiz);
+  
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENB, hiz);
+}
+
+void loop() {
+  motorSaatYonunde(200); // Motorları saat yönünde hareket ettir
+  delay(2000);
+  
+  digitalWrite(IN1, LOW); // Motorları durdur
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  delay(2000);
+  
+  motorSaatTersiYonunde(200); // Motorları saat yönünün tersinde hareket ettir
+  delay(2000);
+  
+  digitalWrite(IN1, LOW); // Motorları tekrar durdur
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+  delay(2000);
+}
