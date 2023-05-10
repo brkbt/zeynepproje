@@ -1,0 +1,19 @@
+#define ENA 10
+#define IN1 9
+#define IN2 8
+
+void motor1() {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 200); // Motor 1'i hareket ettir
+}
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+}
+
+void loop() {
+  motor1(); // Motor 1'i çalıştır
+}
