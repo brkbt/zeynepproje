@@ -1,0 +1,31 @@
+//Motor kontrol pinleri
+int motorPin1 = 9;  // IN1 - L298N
+int motorPin2 = 10; // IN2 - L298N
+
+void setup() {
+  // Motor kontrol pinlerini çıkış olarak ayarla
+  pinMode(motorPin1, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
+}
+
+void loop() {
+  // Motoru saat yönünde döndür
+  digitalWrite(motorPin1, HIGH);
+  digitalWrite(motorPin2, LOW);
+  delay(2000); // 2 saniye beklet
+  
+  // Motoru durdur
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, LOW);
+  delay(2000); // 2 saniye beklet
+
+  // Motoru saat yönünün tersine döndür
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, HIGH);
+  delay(2000); // 2 saniye beklet
+
+  // Motoru tekrar durdur
+  digitalWrite(motorPin1, LOW);
+  digitalWrite(motorPin2, LOW);
+  delay(2000); // 2 saniye beklet
+}
