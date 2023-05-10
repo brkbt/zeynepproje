@@ -6,18 +6,6 @@ void motor1() {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   analogWrite(ENA, 200); // Motor 1'i hareket ettir
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN1, LOW); // Motoru durdur
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 0);
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN1, LOW); // Motor 1'i ters yönde hareket ettir
-  digitalWrite(IN2, HIGH);
-  analogWrite(ENA, 200); // Motor 1'i hareket ettir
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN1, LOW); // Motoru durdur
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 0);
 }
 
 void setup() {
