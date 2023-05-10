@@ -2,10 +2,22 @@
 #define IN1 9
 #define IN2 8
 
-void motor1() {
+void motor1Forward() {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
-  analogWrite(ENA, 200); // Motor 1'i hareket ettir
+  analogWrite(ENA, 200); // Motor 1'i ileri yönde hareket ettir
+}
+
+void motor1Reverse() {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  analogWrite(ENA, 200); // Motor 1'i geri yönde hareket ettir
+}
+
+void stopMotor1() {
+  digitalWrite(IN1, LOW); // Motoru durdur
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 0);
 }
 
 void setup() {
@@ -15,5 +27,12 @@ void setup() {
 }
 
 void loop() {
-  motor1(); // Motor 1'i çalıştır
+  motor1Forward(); // Motor 1'i ileri yönde çalıştır
+  delay(2000); // 2 saniye bekle
+  stopMotor1(); // Motoru durdur
+  delay(2000); // 2 saniye bekle
+  motor1Reverse(); // Motor 1'i geri yönde çalıştır
+  delay(2000); // 2 saniye bekle
+  stopMotor1(); // Motoru durdur
+  delay(2000); // 2 saniye bekle
 }
