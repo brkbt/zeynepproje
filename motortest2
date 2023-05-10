@@ -1,56 +1,19 @@
-#define ENA 10
-#define IN1 9
-#define IN2 8
+#define ENB 5
 #define IN3 7
 #define IN4 6
-#define ENB 5
-
-void motor1() {
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 200); // Motor 1'i hareket ettir
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN1, LOW); // Motoru durdur
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 0);
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN1, LOW); // Motor 1'i ters yönde hareket ettir
-  digitalWrite(IN2, HIGH);
-  analogWrite(ENA, 200); // Motor 1'i hareket ettir
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN1, LOW); // Motoru durdur
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 0);
-}
 
 void motor2() {
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-  analogWrite(ENB, 200); // Motor 2'yi hareket ettir
-  delay(3000); // 3 saniye bekle
-  digitalWrite(IN3, LOW); // Motoru durdur
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, 0);
-  delay(2000); // 2 saniye bekle
-  digitalWrite(IN3, LOW); // Motor 2'yi ters yönde hareket ettir
-  digitalWrite(IN4, HIGH);
-  analogWrite(ENB, 200); // Motor 2'yi hareket ettir
-  delay(3000); // 3 saniye bekle
-  digitalWrite(IN3, LOW); // Motoru durdur
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, 0);
+  analogWrite(ENB, 100); // Motor 2'yi düşük hızda hareket ettir
 }
 
 void setup() {
-  pinMode(ENA, OUTPUT);
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
+  pinMode(ENB, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
-  pinMode(ENB, OUTPUT);
 }
 
 void loop() {
-  motor1(); // Motor 1'i kontrol et
   motor2(); // Motor 2'yi kontrol et
 }
