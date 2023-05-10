@@ -1,31 +1,51 @@
-//Motor kontrol pinleri
-int motorPin1 = 9;  // IN1 - L298N
-int motorPin2 = 10; // IN2 - L298N
+// Motorlar için kontrol pinleri
+int motor1Pin1 = 9; // IN1 - L298N
+int motor1Pin2 = 8; // IN2 - L298N
+int motor2Pin1 = 7; // IN3 - L298N
+int motor2Pin2 = 6; // IN4 - L298N
 
 void setup() {
   // Motor kontrol pinlerini çıkış olarak ayarla
-  pinMode(motorPin1, OUTPUT);
-  pinMode(motorPin2, OUTPUT);
+  pinMode(motor1Pin1, OUTPUT);
+  pinMode(motor1Pin2, OUTPUT);
+  pinMode(motor2Pin1, OUTPUT);
+  pinMode(motor2Pin2, OUTPUT);
 }
 
 void loop() {
-  // Motoru saat yönünde döndür
-  digitalWrite(motorPin1, HIGH);
-  digitalWrite(motorPin2, LOW);
-  delay(2000); // 2 saniye beklet
-  
-  // Motoru durdur
-  digitalWrite(motorPin1, LOW);
-  digitalWrite(motorPin2, LOW);
+  // Motor 1'i saat yönünde döndür
+  digitalWrite(motor1Pin1, HIGH);
+  digitalWrite(motor1Pin2, LOW);
+
+  // Motor 2'yi saat yönünde döndür
+  digitalWrite(motor2Pin1, HIGH);
+  digitalWrite(motor2Pin2, LOW);
+
   delay(2000); // 2 saniye beklet
 
-  // Motoru saat yönünün tersine döndür
-  digitalWrite(motorPin1, LOW);
-  digitalWrite(motorPin2, HIGH);
+  // Motorları durdur
+  digitalWrite(motor1Pin1, LOW);
+  digitalWrite(motor1Pin2, LOW);
+  digitalWrite(motor2Pin1, LOW);
+  digitalWrite(motor2Pin2, LOW);
+
   delay(2000); // 2 saniye beklet
 
-  // Motoru tekrar durdur
-  digitalWrite(motorPin1, LOW);
-  digitalWrite(motorPin2, LOW);
+  // Motor 1'i saat yönünün tersine döndür
+  digitalWrite(motor1Pin1, LOW);
+  digitalWrite(motor1Pin2, HIGH);
+
+  // Motor 2'yi saat yönünün tersine döndür
+  digitalWrite(motor2Pin1, LOW);
+  digitalWrite(motor2Pin2, HIGH);
+
+  delay(2000); // 2 saniye beklet
+
+  // Motorları tekrar durdur
+  digitalWrite(motor1Pin1, LOW);
+  digitalWrite(motor1Pin2, LOW);
+  digitalWrite(motor2Pin1, LOW);
+  digitalWrite(motor2Pin2, LOW);
+
   delay(2000); // 2 saniye beklet
 }
