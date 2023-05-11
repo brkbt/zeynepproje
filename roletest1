@@ -1,0 +1,40 @@
+#define ENA 10
+#define IN1 9
+#define IN2 8
+#define IN3 7
+#define IN4 6
+#define ENB 5
+#define RELAY_PIN 4
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(IN1, HIGH); // Motor 1'i saat yönünde döndür
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 200); // Motor 1 hızını ayarla (0-255 arasında bir değer)
+
+  digitalWrite(IN3, HIGH); // Motor 2'yi saat yönünde döndür
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, 200); // Motor 2 hızını ayarla
+
+  digitalWrite(RELAY_PIN, LOW); // Elektromıknatısı aç
+
+  delay(5000); // 5 saniye beklet
+
+  digitalWrite(IN1, LOW); // Motorları durdur
+  digitalWrite(IN2, LOW);
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+
+  digitalWrite(RELAY_PIN, HIGH); // Elektromıknatısı kapat
+
+  delay(5000); // 5 saniye beklet
+}
