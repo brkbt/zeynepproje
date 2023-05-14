@@ -1,0 +1,59 @@
+#define ENA 10
+#define IN1 9
+#define IN2 8
+#define IN3 7
+#define IN4 6
+#define ENB 5
+#define RELAY_PIN 4
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+}
+
+void loop() {
+  // Yükü al
+  digitalWrite(RELAY_PIN, LOW); // Elektromıknatısı aç
+  delay(1000); // Bekle
+  digitalWrite(IN1, HIGH); // Motor 1'i çalıştır (yükü yukarı kaldır)
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 200); // Motor 1 hızını ayarla
+  delay(5000); // Yükü kaldırmak için 5 saniye bekle
+  digitalWrite(IN1, LOW); // Motor 1'i durdur
+
+  // Yükü taşı
+  digitalWrite(IN3, HIGH); // Motor 2'yi çalıştır (yükü sağa taşı)
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, 200); // Motor 2 hızını ayarla
+  delay(5000); // Yükü taşımak için 5 saniye bekle
+  digitalWrite(IN3, LOW); // Motor 2'yi durdur
+
+  // Yükü bırak
+  digitalWrite(RELAY_PIN, HIGH); // Elektromıknatısı kapat
+  delay(1000); // Bekle
+
+  // Yükü geri al
+  digitalWrite(RELAY_PIN, LOW); // Elektromıknatısı aç
+  delay(1000); // Bekle
+  digitalWrite(IN3, LOW); // Motor 2'yi ters yönde çalıştır (yükü geri al)
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENB, 200); // Motor 2 hızını ayarla
+  delay(5000); // Yükü taşımak için 5 saniye bekle
+  digitalWrite(IN3, LOW); // Motor 2'yi durdur
+
+  // Yükü aşağı bırak
+  digitalWrite(IN1, LOW); // Motor 1'i ters yönde çalıştır (yükü aşağı indir)
+  digitalWrite(IN2, HIGH);
+  analogWrite(ENA, 200); // Motor 1 hızını ayarla
+  delay(5000); // Yükü indirmek için 5 saniye bekle
+  digitalWrite(IN1, LOW); // Motor 1'i durdur
+
+  // Yükü bırak
+  digitalWrite(RELAY_PIN, HIGH); // Elektromıknatısı kapat
+  delay(1000); // Bekle
+}
