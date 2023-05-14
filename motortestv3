@@ -1,0 +1,8 @@
+void loop() {
+  motor2Down(4000, 200); // Motor 2'yi 4 saniye boyunca aşağı indir
+  electromagnetOn(); // Elektromıknatısı aç
+  motor2Up(4000, 200); // Motor 2'yi 4 saniye boyunca yukarı kaldır
+  motor1Right(3000, 200); // Motor 1'i 3 saniye boyunca sağa döndür
+  motor2Down(4000, 200); // Motor 2'yi 4 saniye boyunca aşağı indir
+  electromagnetOff(); // Elektromıknatısı kapat
+}
