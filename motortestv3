@@ -1,6 +1,11 @@
 // Motor hızları ve süreler (saniye cinsinden)
-const int motorSpeed = 200;
-const int motor1TurnTime = 3000;
+const int motor1SpeedRight = 200;
+const int motor1SpeedLeft = 180;
+const int motor1TurnTimeRight = 3000;
+const int motor1TurnTimeLeft = 3500;
+
+const int motor2SpeedUp = 220;
+const int motor2SpeedDown = 200;
 const int motor2LiftTime = 4000;
 const int motor2DropTime = 4000;
 
@@ -13,30 +18,30 @@ void loop() {
   // Başlangıç noktasını belirle (Motorlar başlangıç noktasında olduğunu varsayıyoruz)
 
   // Aşağı in
-  motor2Down(motor2DropTime, motorSpeed); 
+  motor2Down(motor2DropTime, motor2SpeedDown); 
   delay(waitTimeAfterDrop); // Vincin stabilize olmasını sağlamak için bekle
 
   // Cismi al
   electromagnetOn();
 
   // Cismi yukarı çek
-  motor2Up(motor2LiftTime, motorSpeed); 
+  motor2Up(motor2LiftTime, motor2SpeedUp); 
   delay(waitTimeAfterLift); // Vincin stabilize olmasını sağlamak için bekle
 
   // Cismi 1. bölgeden 2. bölgeye taşı
-  motor1Right(motor1TurnTime, motorSpeed); 
+  motor1Right(motor1TurnTimeRight, motor1SpeedRight); 
   delay(waitTimeAfterTurn); // Vincin stabilize olmasını sağlamak için bekle
 
   // Cismi aşağı indir ve bırak
-  motor2Down(motor2DropTime, motorSpeed); 
+  motor2Down(motor2DropTime, motor2SpeedDown); 
   electromagnetOff();
   delay(waitTimeAfterDrop); // Vincin stabilize olmasını sağlamak için bekle
 
   // Vincin yüksekliğini eski yüksekliğine çıkar
-  motor2Up(motor2LiftTime, motorSpeed); 
+  motor2Up(motor2LiftTime, motor2SpeedUp); 
   delay(waitTimeAfterLift); // Vincin stabilize olmasını sağlamak için bekle
 
   // Eski konumuna ve eski başlangıç noktana geri dön
-  motor1Left(motor1TurnTime, motorSpeed); 
+  motor1Left(motor1TurnTimeLeft, motor1SpeedLeft); 
   delay(waitTimeAfterTurn); // Vincin stabilize olmasını sağlamak için bekle
 }
