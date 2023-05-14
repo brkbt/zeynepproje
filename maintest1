@@ -17,43 +17,43 @@ void setup() {
 }
 
 void loop() {
-  // Yükü al
-  digitalWrite(RELAY_PIN, LOW); // Elektromıknatısı aç
-  delay(1000); // Bekle
-  digitalWrite(IN1, HIGH); // Motor 1'i çalıştır (yükü yukarı kaldır)
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 200); // Motor 1 hızını ayarla
-  delay(5000); // Yükü kaldırmak için 5 saniye bekle
-  digitalWrite(IN1, LOW); // Motor 1'i durdur
-
-  // Yükü taşı
-  digitalWrite(IN3, HIGH); // Motor 2'yi çalıştır (yükü sağa taşı)
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, 200); // Motor 2 hızını ayarla
-  delay(5000); // Yükü taşımak için 5 saniye bekle
-  digitalWrite(IN3, LOW); // Motor 2'yi durdur
-
-  // Yükü bırak
-  digitalWrite(RELAY_PIN, HIGH); // Elektromıknatısı kapat
-  delay(1000); // Bekle
-
-  // Yükü geri al
-  digitalWrite(RELAY_PIN, LOW); // Elektromıknatısı aç
-  delay(1000); // Bekle
-  digitalWrite(IN3, LOW); // Motor 2'yi ters yönde çalıştır (yükü geri al)
+  // Motor 2'yi 4 saniye boyunca aşağı indir
+  digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  analogWrite(ENB, 200); // Motor 2 hızını ayarla
-  delay(5000); // Yükü taşımak için 5 saniye bekle
-  digitalWrite(IN3, LOW); // Motor 2'yi durdur
+  analogWrite(ENB, 200); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
 
-  // Yükü aşağı bırak
-  digitalWrite(IN1, LOW); // Motor 1'i ters yönde çalıştır (yükü aşağı indir)
-  digitalWrite(IN2, HIGH);
-  analogWrite(ENA, 200); // Motor 1 hızını ayarla
-  delay(5000); // Yükü indirmek için 5 saniye bekle
-  digitalWrite(IN1, LOW); // Motor 1'i durdur
+  // Elektromıknatısı aç
+  digitalWrite(RELAY_PIN, LOW); 
+  delay(1000); 
 
-  // Yükü bırak
-  digitalWrite(RELAY_PIN, HIGH); // Elektromıknatısı kapat
-  delay(1000); // Bekle
+  // Motor 2'yi yukarı kaldır
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, 200); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+
+  // Motor 1'i 3 saniye boyunca döndür
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, 200); 
+  delay(3000);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+
+  // Motor 2'yi 4 saniye boyunca aşağı indir
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENB, 200); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+
+  // Elektromıknatısı kapat
+  digitalWrite(RELAY_PIN, HIGH); 
+  delay(1000); 
 }
