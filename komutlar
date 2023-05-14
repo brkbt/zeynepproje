@@ -1,0 +1,43 @@
+void electromagnetOn() {
+  digitalWrite(RELAY_PIN, HIGH); // Elektromıknatısı aç
+}
+
+void electromagnetOff() {
+  digitalWrite(RELAY_PIN, LOW); // Elektromıknatısı kapat
+}
+
+void motor1Right(int duration, int speed) {
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, speed); 
+  delay(duration); 
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+}
+
+void motor1Left(int duration, int speed) {
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, HIGH);
+  analogWrite(ENA, speed); 
+  delay(duration); 
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+}
+
+void motor2Up(int duration, int speed) {
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, speed); 
+  delay(duration); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
+
+void motor2Down(int duration, int speed) {
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENB, speed); 
+  delay(duration); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
