@@ -1,0 +1,83 @@
+#define ENA 10
+#define IN1 9
+#define IN2 8
+#define IN3 7
+#define IN4 6
+#define ENB 5
+#define RELAY_PIN 4
+
+// Her bir motor için çıktı hızını temsil eden sabitler
+#define MOTOR_SPEED_HIGH 255
+#define MOTOR_SPEED_LOW 200
+
+void setup() {
+  pinMode(ENA, OUTPUT);
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT);
+  pinMode(IN4, OUTPUT);
+  pinMode(ENB, OUTPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+}
+
+void loop() {
+  for (int i = 0; i < 3; i++) { // 3 döngü boyunca hareketi tekrarla. Her döngüde 2 cisim alınır, toplamda 6 cisim alınır.
+    // İlk cisim için hareket
+    pickAndPlace(MOTOR_SPEED_LOW);
+    delay(1000); // İki hareket arasında kısa bir bekleme süresi
+
+    // İkinci cisim için hareket
+    pickAndPlace(MOTOR_SPEED_HIGH);
+    delay(1000); // İki hareket arasında kısa bir bekleme süresi
+  }
+}
+
+void pickAndPlace(int motorSpeed) {
+  // Motor 2'yi 4 saniye boyunca aşağı indir
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENB, motorSpeed); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+
+  // Elektromıknatısı aç
+  digitalWrite(RELAY_PIN, LOW); 
+  delay(1000); 
+
+  // Motor 2'yi yukarı kaldır
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, motorSpeed); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+
+  // Motor 1'i 3 saniye boyunca döndür
+  digitalWrite(IN1, HIGH);
+  digitalWrite(IN2, LOW);
+  analogWrite(ENA, motorSpeed); 
+  delay(3000);
+  digitalWrite(IN1, LOW);
+  digitalWrite(IN2, LOW);
+
+  // Motor 2'yi 4 saniye boyunca aşağı indir
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, HIGH);
+  analogWrite(ENB, motorSpeed); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+
+  // Elektromıknatısı kapat
+  digitalWrite(RELAY_PIN, HIGH); 
+  delay(1000); 
+
+  // Motor 2'yi yukarı kaldır (cisimleri üst üste yerleştirmek için)
+  digitalWrite(IN3, HIGH);
+  digitalWrite(IN4, LOW);
+  analogWrite(ENB, motorSpeed); 
+  delay(4000); 
+  digitalWrite(IN3, LOW);
+  digitalWrite(IN4, LOW);
+}
