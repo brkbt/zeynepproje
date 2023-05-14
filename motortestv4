@@ -1,56 +1,69 @@
 #define ENA 10
 #define IN1 9
 #define IN2 8
+#define ENB 5
 #define IN3 7
 #define IN4 6
-#define ENB 5
+
 #define RELAY_PIN 4
+
+// Motor hızlarını tanımla
+int motorSpeed1 = 255; // Motor 1 için hız
+int motorSpeed2 = 255; // Motor 2 için hız
 
 void setup() {
   pinMode(ENA, OUTPUT);
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
+  pinMode(ENB, OUTPUT);
   pinMode(IN3, OUTPUT);
   pinMode(IN4, OUTPUT);
-  pinMode(ENB, OUTPUT);
+  
   pinMode(RELAY_PIN, OUTPUT);
-}
-#include <AFMotor.h>
+  
+  // Başlangıçta elektromıknatısı kapalı tut
+  digitalWrite(RELAY_PIN, HIGH);
 
-// Motorları tanımla
-AF_DCMotor motor1(1);
-AF_DCMotor motor2(2);
-
-void setup() {
-  Serial.begin(9600); // seri portu başlat
-  motor1.setSpeed(255); // motor hızını maksimuma çıkar
-  motor2.setSpeed(255); // motor hızını maksimuma çıkar
+  Serial.begin(9600);
 }
 
 void loop() {
-  // seri portta veri varsa oku
+  // Serial porttan gelen veriyi kontrol et
   if (Serial.available()) {
     String command = Serial.readStringUntil('\n');
 
-    if (command == "m1r") { // Motor 1'i sağa döndür
-      motor1.run(FORWARD);
-      delay(1000);
-      motor1.run(RELEASE);
-    } 
-    else if (command == "m1l") { // Motor 1'i sola döndür
-      motor1.run(BACKWARD);
-      delay(1000);
-      motor1.run(RELEASE);
-    } 
-    else if (command == "m2u") { // Motor 2'yi yukarı çek
-      motor2.run(FORWARD);
-      delay(1000);
-      motor2.run(RELEASE);
-    } 
-    else if (command == "m2d") { // Motor 2'yi aşağı indir
-      motor2.run(BACKWARD);
-      delay(1000);
-      motor2.run(RELEASE);
+    // Motor kontrol komutlarını kontrol et
+    if (command == "m1r") {
+      analogWrite(ENA, motorSpeed1);
+      digitalWrite(IN1, HIGH);
+      digitalWrite(IN2, LOW);
+    } else if (command == "m1l") {
+      analogWrite(ENA, motorSpeed1);
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, HIGH);
+    } else if (command == "m2u") {
+      analogWrite(ENB, motorSpeed2);
+      digitalWrite(IN3, HIGH);
+      digitalWrite(IN4, LOW);
+    } else if (command == "m2d") {
+      analogWrite(ENB, motorSpeed2);
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, HIGH);
+    } else if (command == "stop1") {
+      analogWrite(ENA, 0);
+      digitalWrite(IN1, LOW);
+      digitalWrite(IN2, LOW);
+    } else if (command == "stop2") {
+      analogWrite(ENB, 0);
+      digitalWrite(IN3, LOW);
+      digitalWrite(IN4, LOW);
+    }
+    
+    // Elektromıknatıs kontrol komutlarını kontrol et
+    else if (command == "magnetOn") {
+      digitalWrite(RELAY_PIN, LOW);
+    } else if (command == "magnetOff") {
+      digitalWrite(RELAY_PIN, HIGH);
     }
   }
 }
