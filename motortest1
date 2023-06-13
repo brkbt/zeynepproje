@@ -1,49 +1,74 @@
-#define ENA 10
-#define IN1 9
-#define IN2 8
-#define IN3 7
-#define IN4 6
-#define ENB 5
+#include <NewPing.h>
+
+// Ultrasonik sensörün bağlı olduğu pinler
+const int trigPin = 2;
+const int echoPin = 3;
+
+// Sektör yüksekliklerini tanımla
+int sectorHeights[] = {5, 10, 15, 20};
+
+// Ultrasonik sensör nesnesi
+NewPing sonar(trigPin, echoPin);
 
 void setup() {
-  pinMode(ENA, OUTPUT);
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
-  pinMode(ENB, OUTPUT);
+  // Serial iletişimi başlat
+  Serial.begin(9600);
+  
+  // Hız kontrol pini ayarla
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(IN1, HIGH); // Motor 1'i saat yönünde döndür
-  digitalWrite(IN2, LOW);
-  analogWrite(ENA, 200); // Motor 1 hızını ayarla (0-255 arasında bir değer)
+  // Sağa dönme fonksiyonunu çağır
+  turnRight();
+  
+  // Değişkenlerin ve sayaçların tanımlanması
+  int distance = 0;
+  int repeatCount = 0;
+  int prevDistance = 0;
+  
+  // Ultrasonik sensörden mesafe okuma
+  while (repeatCount < 10) {
+    if (millis() - prevDistance >= 333) {
+      prevDistance = millis();
+      distance = sonar.ping_cm();
+      
+      if (distance > 0) {
+        if (distance >= sectorHeights[0] - 5 && distance <= sectorHeights[sizeof(sectorHeights) / sizeof(sectorHeights[0])] + 5) {
+          distance = roundToNearestMultiple(distance, 10);
+          
+          if (distance == prevDistance) {
+            repeatCount++;
+          } else {
+            repeatCount = 0;
+          }
+        }
+      }
+    }
+  }
+  
+  // Hangi sektörde olduğunu belirle
+  int sector = determineSector(distance);
+  Serial.print("Current sector: ");
+  Serial.println(sector);
+}
 
-  digitalWrite(IN3, HIGH); // Motor 2'yi saat yönünde döndür
-  digitalWrite(IN4, LOW);
-  analogWrite(ENB, 200); // Motor 2 hızını ayarla
+void turnRight() {
+  digitalWrite(9, HIGH);   // IN1
+  digitalWrite(10, LOW);   // IN2
+  analogWrite(5, 80);   // ENB
+}
 
-  delay(2000); // 2 saniye beklet
+int determineSector(int distance) {
+  for (int i = 0; i < sizeof(sectorHeights) / sizeof(sectorHeights[0]); i++) {
+    if (distance <= sectorHeights[i]) {
+      return i + 1;
+    }
+  }
+  return -1; // Sektör bulunamadı
+}
 
-  digitalWrite(IN1, LOW); // Motorları durdur
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
-
-  delay(2000); // 2 saniye beklet
-
-  digitalWrite(IN1, LOW); // Motor 1'i saat yönünün tersine döndür
-  digitalWrite(IN2, HIGH);
-  analogWrite(ENA, 200); // Motor 1 hızını ayarla
-
-  digitalWrite(IN3, LOW); // Motor 2'yi saat yönünün tersine döndür
-  digitalWrite(IN4, HIGH);
-  analogWrite(ENB, 200); // Motor 2 hızını ayarla
-
-  delay(2000); // 2 saniye beklet
-
-  digitalWrite(IN1, LOW); // Motorları tekrar durdur
-  digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, LOW);
+int roundToNearestMultiple(int num, int multiple) {
+  return round(num / multiple) * multiple;
 }
